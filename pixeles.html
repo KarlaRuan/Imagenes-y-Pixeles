@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<canvas id="canvas" width="800" height="800"></canvas>
+
+	<script type="text/javascript">
+		const canvas=document.getElementById("canvas");
+		const ctx=canvas.getContext("2d");
+
+		let image=new Image();
+
+		image.src="./imagen.jpg";
+
+		image.onload=function(){
+			console.log("La imagen fue cargada");
+			ctx.drawImage(this,560,20,150,220,20,20,200,300);
+//_____________________________Leer pixeles
+			let imageData=ctx.getImageData(0,0,canvas.width,canvas.height);
+			//el +=4 es por el rgba del pixel (rojo,verde,azul,alpha)
+			//Los colores van del 0-255 y el alpha de 0-1 representa el intensidad
+			/*for(let i=0;i<imageData.data.length;i+=4){
+
+			}*/
+			const firstPixel={
+				r:imageData.data[0],
+				g:imageData.data[1],
+				b:imageData.data[2],
+				a:imageData.data[3]
+			}
+			const sencondPixel={
+				r:imageData.data[4],
+				g:imageData.data[5],
+				b:imageData.data[6],
+				a:imageData.data[7]
+			}
+
+			console.log(firstPixel);
+			console.log(sencondPixel);
+		}
+
+		
+
+	</script>
+</body>
+</html>
