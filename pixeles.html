@@ -16,32 +16,46 @@
 
 		image.onload=function(){
 			console.log("La imagen fue cargada");
-			ctx.drawImage(this,560,20,150,220,20,20,200,300);
+			ctx.drawImage(this,10,10);
 //_____________________________Leer pixeles
-			let imageData=ctx.getImageData(0,0,canvas.width,canvas.height);
+			//let imageData=ctx.getImageData(0,0,canvas.width,canvas.height);
 			//el +=4 es por el rgba del pixel (rojo,verde,azul,alpha)
-			//Los colores van del 0-255 y el alpha de 0-1 representa el intensidad
-			/*for(let i=0;i<imageData.data.length;i+=4){
-
-			}*/
-			const firstPixel={
+			//Los colores van del 0-255 y el alpha de 0-255 representa el intensidad
+			/*const firstPixel={
 				r:imageData.data[0],
 				g:imageData.data[1],
 				b:imageData.data[2],
 				a:imageData.data[3]
 			}
-			const sencondPixel={
-				r:imageData.data[4],
-				g:imageData.data[5],
-				b:imageData.data[6],
-				a:imageData.data[7]
+			console.log(firstPixel);*/
+//____________________________Convertir a blanco y negro
+			convertirByN();
+
+		}	
+			function convertirByN(){
+				let imageData=ctx.getImageData(0,0,canvas.width,canvas.height);
+
+				console.log("Inicié la conversión");
+
+				let pixeles=imageData.data; //se guarda la matriz de pixeles de la imagen
+
+				for (let i=0;i<pixeles.length;i+=4){
+					const pixel={
+					r:pixeles[i],
+					g:pixeles[i+1],
+					b:pixeles[i+2],
+					a:pixeles[i+3]
+					};
+				//Se saca un promedio para poner en blanco y negro
+				const promedio=(pixel.r+pixel.g+pixel.b)/3;
+
+				pixeles[i]=promedio;
+				pixeles[i+1]=promedio;
+				promedio[i+2]=promedio;
 			}
-
-			console.log(firstPixel);
-			console.log(sencondPixel);
+			ctx.putImageData(imageData,0,0);
+			console.log("Finalicé la conversión");	
 		}
-
-		
 
 	</script>
 </body>
